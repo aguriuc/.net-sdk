@@ -127,6 +127,14 @@ namespace CTCT.Util
             /// </summary>
             public const string CampaignTrackingLink = "emailmarketing/campaigns/{0}/tracking/clicks/{1}";
             /// <summary>
+            /// Contact tracking all.
+            /// </summary>
+            public const string ContactTrackingAll = "contacts/{0}/tracking";
+            /// <summary>
+            /// Contact tracking summary by campaign.
+            /// </summary>
+            public const string ContactTrackingSummaryByCampaign = "contacts/{0}/tracking/reports/summaryByCampaign";
+            /// <summary>
             /// Contact tracking summary.
             /// </summary>
             public const string ContactTrackingSummary = "contacts/{0}/tracking/reports/summary";

@@ -121,8 +121,8 @@ namespace CTCT.Services
         /// <param name="campaignId">Campaign id.</param>
         /// <param name="limit">Specifies the number of results per page in the output, from 1 - 500, default = 500.</param>
         /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
-        /// <returns>ResultSet containing a results array of @link OptOutActivity.</returns>
-        ResultSet<OptOutActivity> GetOptOuts(string accessToken, string apiKey, string campaignId, int? limit, DateTime? createdSince);
+        /// <returns>ResultSet containing a results array of @link UnsubscribeActivity.</returns>
+        ResultSet<UnsubscribeActivity> GetOptOuts(string accessToken, string apiKey, string campaignId, int? limit, DateTime? createdSince);
 
         /// <summary>
         /// Get opt outs for a given campaign.
@@ -131,8 +131,8 @@ namespace CTCT.Services
         /// <param name="apiKey">The API key for the application</param>
         /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
         /// <param name="pag">Pagination object.</param>
-        /// <returns>ResultSet containing a results array of @link OptOutActivity.</returns>
-        ResultSet<OptOutActivity> GetOptOuts(string accessToken, string apiKey, DateTime? createdSince, Pagination pag);
+        /// <returns>ResultSet containing a results array of @link UnsubscribeActivity.</returns>
+        ResultSet<UnsubscribeActivity> GetOptOuts(string accessToken, string apiKey, DateTime? createdSince, Pagination pag);
 
         /// <summary>
         /// Get a summary of reporting data for a given campaign.

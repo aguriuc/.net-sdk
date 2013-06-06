@@ -19,6 +19,9 @@ namespace CTCT.Components.Activities
         [DataMember(Name = "lists", EmitDefaultValue = false)]
         public IList<string> Lists { get; set; }
 
+        /// <summary>
+        /// Class constructor
+        /// </summary>
         public ClearContactList() { 
         }
     }

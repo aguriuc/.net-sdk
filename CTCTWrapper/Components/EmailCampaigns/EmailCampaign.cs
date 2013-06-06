@@ -96,6 +96,19 @@ namespace CTCT.Components.EmailCampaigns
             set { this.LastRunDateString = value.ToISO8601String(); }
         }
         /// <summary>
+        /// String representation of last sent date.
+        /// </summary>
+        [DataMember(Name = "last_sent_date", EmitDefaultValue = false)]
+        private string LastSentDateString { get; set; }
+        /// <summary>
+        /// Gets or sets the last sent date.
+        /// </summary>
+        public DateTime? LastSentDate
+        {
+            get { return this.LastSentDateString.FromISO8601String(); }
+            set { this.LastSentDateString = value.ToISO8601String(); }
+        }
+        /// <summary>
         /// String representation of next run date.
         /// </summary>
         [DataMember(Name = "next_run_date", EmitDefaultValue = false)]
@@ -125,7 +138,7 @@ namespace CTCT.Components.EmailCampaigns
         /// Gets or sets the permission for web page.
         /// </summary>
         [DataMember(Name = "is_view_as_webpage_enabled", EmitDefaultValue = false)]
-        public bool IsViewAsWebPageEnabled { get; set; }
+        public bool? IsViewAsWebPageEnabled { get; set; }
         /// <summary>
         /// Gets or sets the permission reminder text.
         /// </summary>
@@ -139,7 +152,7 @@ namespace CTCT.Components.EmailCampaigns
         /// <summary>
         /// Gets or sets the view page link.
         /// </summary>
-        [DataMember(Name = "view_as_web_page_link", EmitDefaultValue = false)]
+        [DataMember(Name = "view_as_web_page_link_text", EmitDefaultValue = false)]
         public string ViewAsWebPageLink { get; set; }
         /// <summary>
         /// Gets or sets the greeting.
@@ -227,6 +240,11 @@ namespace CTCT.Components.EmailCampaigns
         /// </summary>
         [DataMember(Name = "archive_url", EmitDefaultValue = false)]
         public string ArchiveURL { get; set; }
+        /// <summary>
+        /// Gets or sets the flag for permission reminder.
+        /// </summary>
+        [DataMember(Name = "is_permission_reminder_enabled", EmitDefaultValue = false)]
+        public bool? IsReminderEnabled { get; set; }
 
         /// <summary>
         /// Class constructor.

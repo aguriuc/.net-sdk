@@ -296,10 +296,10 @@ namespace CTCT.Services
         /// <param name="contactId">Contact id.</param>
         /// <param name="limit">Specifies the number of results per page in the output, from 1 - 500, default = 500.</param>
         /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
-        /// <returns>ResultSet containing a results array of @link OptOutActivity.</returns>
-        public ResultSet<OptOutActivity> GetOptOuts(string accessToken, string apiKey, string contactId, int? limit, DateTime? createdSince)
+        /// <returns>ResultSet containing a results array of @link UnsubscribeActivity.</returns>
+        public ResultSet<UnsubscribeActivity> GetUnsubscribes(string accessToken, string apiKey, string contactId, int? limit, DateTime? createdSince)
         {
-            return GetOptOuts(accessToken, apiKey, contactId, limit, createdSince, null);
+            return GetUnsubscribes(accessToken, apiKey, contactId, limit, createdSince, null);
         }
 
         /// <summary>
@@ -309,10 +309,10 @@ namespace CTCT.Services
         /// <param name="apiKey">The API key for the application</param>
         /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
         /// <param name="pag">Pagination object.</param>
-        /// <returns>ResultSet containing a results array of @link OptOutActivity.</returns>
-        public ResultSet<OptOutActivity> GetOptOuts(string accessToken, string apiKey, DateTime? createdSince, Pagination pag)
+        /// <returns>ResultSet containing a results array of @link UnsubscribeActivity.</returns>
+        public ResultSet<UnsubscribeActivity> GetUnsubscribes(string accessToken, string apiKey, DateTime? createdSince, Pagination pag)
         {
-            return GetOptOuts(accessToken, apiKey, null, null, createdSince, pag);
+            return GetUnsubscribes(accessToken, apiKey, null, null, createdSince, pag);
         }
 
         /// <summary>
@@ -324,10 +324,10 @@ namespace CTCT.Services
         /// <param name="limit">Specifies the number of results per page in the output, from 1 - 500, default = 500.</param>
         /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
         /// <param name="pag">Pagination object.</param>
-        /// <returns>ResultSet containing a results array of @link OptOutActivity.</returns>
-        private ResultSet<OptOutActivity> GetOptOuts(string accessToken, string apiKey, string contactId, int? limit, DateTime? createdSince, Pagination pag)
+        /// <returns>ResultSet containing a results array of @link UnsubscribeActivity.</returns>
+        private ResultSet<UnsubscribeActivity> GetUnsubscribes(string accessToken, string apiKey, string contactId, int? limit, DateTime? createdSince, Pagination pag)
         {
-            ResultSet<OptOutActivity> results = null;
+            ResultSet<UnsubscribeActivity> results = null;
             string url = (pag == null) ? Config.ConstructUrl(Config.Endpoints.ContactTrackingUnsubscribes, new object[] { contactId }, new object[] { "limit", limit, "created_since", Extensions.ToISO8601String(createdSince) }) : pag.GetNextUrl();
             CUrlResponse response = RestClient.Get(url, accessToken, apiKey);
 
@@ -338,7 +338,7 @@ namespace CTCT.Services
 
             if (response.HasData)
             {
-                results = Component.FromJSON<ResultSet<OptOutActivity>>(response.Body);
+                results = Component.FromJSON<ResultSet<UnsubscribeActivity>>(response.Body);
             }
 
             return results;
@@ -368,6 +368,88 @@ namespace CTCT.Services
             }
 
             return summary;
+        }
+
+        /// <summary>
+        /// Get a summary of reporting data for a given contact.
+        /// </summary>
+        /// <param name="accessToken">Constant Contact OAuth2 access token.</param>
+        /// <param name="apiKey">The API key for the application</param>
+        /// <param name="contactId">Contact id.</param>
+        /// <returns>Tracking summary.</returns>
+        public TrackingSummaryByEmailCampaign GetSummaryByEmailCampaign(string accessToken, string apiKey, string contactId)
+        {
+            TrackingSummaryByEmailCampaign summary = null;
+            string url = Config.ConstructUrl(Config.Endpoints.ContactTrackingSummaryByCampaign, new object[] { contactId }, null);
+            CUrlResponse response = RestClient.Get(url, accessToken, apiKey);
+
+            if (response.IsError)
+            {
+                throw new CtctException(response.GetErrorMessage());
+            }
+
+            if (response.HasData)
+            {
+                summary = Component.FromJSON<TrackingSummaryByEmailCampaign>(response.Body);
+            }
+
+            return summary;
+        }
+
+        /// <summary>
+        /// Get all activities for a given contact.
+        /// </summary>
+        /// <param name="accessToken">Constant Contact OAuth2 access token.</param>
+        /// <param name="apiKey">The API key for the application</param>
+        /// <param name="contactId">Contact id.</param>
+        /// <param name="limit">Specifies the number of results per page in the output, from 1 - 500, default = 500.</param>
+        /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
+        /// <returns>ResultSet containing a results array of @link BounceActivity</returns>
+        public ResultSet<AllActivity> GetAllActivities(string accessToken, string apiKey, string contactId, int? limit, DateTime? createdSince)
+        {
+            return GetAllActivities(accessToken, apiKey, contactId, limit, createdSince, null);
+        }
+
+        /// <summary>
+        /// Get all activities for a given contact.
+        /// </summary>
+        /// <param name="accessToken">Constant Contact OAuth2 access token.</param>
+        /// <param name="apiKey">The API key for the application</param>
+        /// <param name="pag">Pagination object.</param>
+        /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
+        /// <returns>ResultSet containing a results array of @link BounceActivity</returns>
+        public ResultSet<AllActivity> GetAllActivities(string accessToken, string apiKey, DateTime? createdSince, Pagination pag)
+        {
+            return GetAllActivities(accessToken, apiKey, null, null, createdSince, pag);
+        }
+
+        /// <summary>
+        /// Get bounces for a given contact.
+        /// </summary>
+        /// <param name="accessToken">Constant Contact OAuth2 access token.</param>
+        /// <param name="apiKey">The API key for the application</param>
+        /// <param name="contactId">Contact id.</param>
+        /// <param name="limit">Specifies the number of results per page in the output, from 1 - 500, default = 500.</param>
+        /// <param name="pag">Pagination object.</param>
+        /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
+        /// <returns>ResultSet containing a results array of @link BounceActivity</returns>
+        private ResultSet<AllActivity> GetAllActivities(string accessToken, string apiKey, string contactId, int? limit, DateTime? createdSince, Pagination pag)
+        {
+            ResultSet<AllActivity> results = null;
+            string url = (pag == null) ? Config.ConstructUrl(Config.Endpoints.ContactTrackingBounces, new object[] { contactId }, new object[] { "limit", limit, "created_since", Extensions.ToISO8601String(createdSince) }) : pag.GetNextUrl();
+            CUrlResponse response = RestClient.Get(url, accessToken, apiKey);
+
+            if (response.IsError)
+            {
+                throw new CtctException(response.GetErrorMessage());
+            }
+
+            if (response.HasData)
+            {
+                results = Component.FromJSON<ResultSet<AllActivity>>(response.Body);
+            }
+
+            return results;
         }
     }
 }

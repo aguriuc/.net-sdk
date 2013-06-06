@@ -1135,7 +1135,7 @@ namespace CTCTWrapper.UnitTest
             Assert.AreNotEqual(0, schedule.Id);
             Assert.IsNotNull(schedule.ScheduledDate);
 
-            ResultSet<OptOutActivity> result = cc.GetCampaignTrackingOptOuts(camp.Id, null, DateTime.Now.AddMonths(-1));
+            ResultSet<UnsubscribeActivity> result = cc.GetCampaignTrackingOptOuts(camp.Id, null, DateTime.Now.AddMonths(-1));
 
             Assert.IsNotNull(result);
         }
@@ -1303,7 +1303,7 @@ namespace CTCTWrapper.UnitTest
             Assert.IsNotNull(contacts.Results);
             Assert.IsTrue(contacts.Results.Count > 0);
 
-            ResultSet<OptOutActivity> a = cc.GetContactTrackingOptOuts(contacts.Results[0].Id, DateTime.Now.AddMonths(-1));
+            ResultSet<UnsubscribeActivity> a = cc.GetContactTrackingUnsubscribes(contacts.Results[0].Id, DateTime.Now.AddMonths(-1));
             Assert.IsNotNull(a);
         } 
 

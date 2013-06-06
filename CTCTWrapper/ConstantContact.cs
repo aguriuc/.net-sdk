@@ -867,8 +867,8 @@ namespace CTCT
         /// <param name="campaignId">Campaign id.</param>
         /// <param name="limit">Specifies the number of results per page in the output, from 1 - 500, default = 500.</param>
         /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
-        /// <returns>ResultSet containing a results array of @link OptOutActivity.</returns>
-        public ResultSet<OptOutActivity> GetCampaignTrackingOptOuts(string campaignId, int? limit,
+        /// <returns>ResultSet containing a results array of @link UnsubscribeActivity.</returns>
+        public ResultSet<UnsubscribeActivity> GetCampaignTrackingOptOuts(string campaignId, int? limit,
                                                                     DateTime? createdSince)
         {
             if (campaignId == null)
@@ -884,8 +884,8 @@ namespace CTCT
         /// </summary>
         /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
         /// <param name="pag">Pagination object.</param>
-        /// <returns>ResultSet containing a results array of @link OptOutActivity.</returns>
-        public ResultSet<OptOutActivity> GetCampaignTrackingOptOuts(DateTime? createdSince, Pagination pag)
+        /// <returns>ResultSet containing a results array of @link UnsubscribeActivity.</returns>
+        public ResultSet<UnsubscribeActivity> GetCampaignTrackingOptOuts(DateTime? createdSince, Pagination pag)
         {
             return CampaignTrackingService.GetOptOuts(AccessToken, APIKey, createdSince, pag);
         }
@@ -1118,11 +1118,11 @@ namespace CTCT
         /// </summary>
         /// <param name="contactId">Contact id.</param>
         /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
-        /// <returns>ResultSet containing a results array of @link OptOutActivity.</returns>
+        /// <returns>ResultSet containing a results array of @link UnsubscribeActivity.</returns>
         /// <exception cref="IllegalArgumentException">IllegalArgumentException</exception>
-        public ResultSet<OptOutActivity> GetContactTrackingOptOuts(string contactId, DateTime? createdSince)
+        public ResultSet<UnsubscribeActivity> GetContactTrackingUnsubscribes(string contactId, DateTime? createdSince)
         {
-            return GetContactTrackingOptOuts(contactId, null, createdSince);
+            return GetContactTrackingUnsubscribes(contactId, null, createdSince);
         }
 
         /// <summary>
@@ -1131,16 +1131,16 @@ namespace CTCT
         /// <param name="contactId">Contact id.</param>
         /// <param name="limit">Specifies the number of results per page in the output, from 1 - 500, default = 500.</param>
         /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
-        /// <returns>ResultSet containing a results array of @link OptOutActivity.</returns>
+        /// <returns>ResultSet containing a results array of @link UnsubscribeActivity.</returns>
         /// <exception cref="IllegalArgumentException">IllegalArgumentException</exception>
-        public ResultSet<OptOutActivity> GetContactTrackingOptOuts(string contactId, int? limit, DateTime? createdSince)
+        public ResultSet<UnsubscribeActivity> GetContactTrackingUnsubscribes(string contactId, int? limit, DateTime? createdSince)
         {
             if (contactId == null)
             {
                 throw new IllegalArgumentException(Config.Errors.ContactTrackingOrId);
             }
 
-            return ContactTrackingService.GetOptOuts(AccessToken, APIKey, contactId, limit, createdSince);
+            return ContactTrackingService.GetUnsubscribes(AccessToken, APIKey, contactId, limit, createdSince);
         }
 
         /// <summary>
@@ -1148,10 +1148,51 @@ namespace CTCT
         /// </summary>
         /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
         /// <param name="pag">Pagination object.</param>
-        /// <returns>ResultSet containing a results array of @link OptOutActivity.</returns>
-        public ResultSet<OptOutActivity> GetContactTrackingOptOuts(DateTime? createdSince, Pagination pag)
+        /// <returns>ResultSet containing a results array of @link UnsubscribeActivity.</returns>
+        public ResultSet<UnsubscribeActivity> GetContactTrackingUnsubscribes(DateTime? createdSince, Pagination pag)
         {
-            return ContactTrackingService.GetOptOuts(AccessToken, APIKey, createdSince, pag);
+            return ContactTrackingService.GetUnsubscribes(AccessToken, APIKey, createdSince, pag);
+        }
+
+        /// <summary>
+        /// Get all activities for a given contact.
+        /// </summary>
+        /// <param name="contactId">Contact id.</param>
+        /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
+        /// <returns>ResultSet containing a results array of @link AllActivity</returns>
+        /// <exception cref="IllegalArgumentException">IllegalArgumentException</exception>
+        public ResultSet<AllActivity> GetContactTrackingAll(string contactId, DateTime? createdSince)
+        {
+            return GetContactTrackingAll(contactId, null, createdSince);
+        }
+
+        /// <summary>
+        /// Get all activities for a given contact.
+        /// </summary>
+        /// <param name="contactId">Contact id.</param>
+        /// <param name="limit">Specifies the number of results per page in the output, from 1 - 500, default = 500.</param>
+        /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
+        /// <returns>ResultSet containing a results array of @link AllActivity</returns>
+        /// <exception cref="IllegalArgumentException">IllegalArgumentException</exception>
+        public ResultSet<AllActivity> GetContactTrackingAll(string contactId, int? limit, DateTime? createdSince)
+        {
+            if (contactId == null)
+            {
+                throw new IllegalArgumentException(Config.Errors.ContactTrackingOrId);
+            }
+
+            return ContactTrackingService.GetAllActivities(AccessToken, APIKey, contactId, limit, createdSince);
+        }
+
+        /// <summary>
+        /// Get all activities for a given contact.
+        /// </summary>
+        /// <param name="pag">Pagination object.</param>
+        /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
+        /// <returns>ResultSet containing a results array of @link AllActivity</returns>
+        public ResultSet<AllActivity> GetContactTrackingAll(DateTime? createdSince, Pagination pag)
+        {
+            return ContactTrackingService.GetAllActivities(AccessToken, APIKey, createdSince, pag);
         }
 
         /// <summary>
@@ -1168,6 +1209,22 @@ namespace CTCT
             }
 
             return ContactTrackingService.GetSummary(AccessToken, APIKey, contactId);
+        }
+
+        /// <summary>
+        /// Get a summary of reporting data for a given contact.
+        /// </summary>
+        /// <param name="contactId">Contact id.</param>
+        /// <returns>Tracking summary.</returns>
+        /// <exception cref="IllegalArgumentException">IllegalArgumentException</exception>
+        public TrackingSummaryByEmailCampaign GetContactTrackingSummaryEmailCampaign(string contactId)
+        {
+            if (contactId == null)
+            {
+                throw new IllegalArgumentException(Config.Errors.ContactTrackingOrId);
+            }
+
+            return ContactTrackingService.GetSummaryByEmailCampaign(AccessToken, APIKey, contactId);
         }
 
         #endregion

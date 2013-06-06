@@ -16,58 +16,53 @@ namespace CTCT.Components.Tracking
         /// <summary>
         /// Gets or sets the activity type.
         /// </summary>
-        [DataMember(Name = "activity_type")]
+        [DataMember(Name = "activity_type", EmitDefaultValue = false)]
         public string ActivityType { get; set; }
         /// <summary>
         /// Gets or sets the campaign id.
         /// </summary>
-        [DataMember(Name = "campaign_id")]
+        [DataMember(Name = "campaign_id", EmitDefaultValue = false)]
         public string CampaignId { get; set; }
         /// <summary>
         /// Gets or sets the contact id.
         /// </summary>
-        [DataMember(Name = "contact_id")]
-        public int ContactId { get; set; }
+        [DataMember(Name = "contact_id", EmitDefaultValue = false)]
+        public string ContactId { get; set; }
         /// <summary>
         /// Gets or sets the email address.
         /// </summary>
-        [DataMember(Name = "email_address")]
+        [DataMember(Name = "email_address", EmitDefaultValue = false)]
         public string EmailAddress { get; set; }
     }
 
     /// <summary>
-    /// Activity type enumeration.
+    /// Activity type.
     /// </summary>
-    [Serializable]
-    public enum ActivityType
+    public struct ActivityType
     {
         /// <summary>
         /// Bounce activity.
         /// </summary>
-        Bounce,
+        public const string Bounce = "EMAIL_BOUNCE";
         /// <summary>
         /// Click activity.
         /// </summary>
-        Click,
+        public const string Click = "EMAIL_CLICK";
         /// <summary>
         /// Forward activity.
         /// </summary>
-        Forward,
+        public const string Forward = "EMAIL_FORWARD";
         /// <summary>
         /// Open activity.
         /// </summary>
-        Open,
+        public const string Open = "EMAIL_OPEN";
         /// <summary>
-        /// OptOut activity.
+        /// Unsubscribe activity.
         /// </summary>
-        OptOut,
+        public const string Unsubscribe = "EMAIL_UNSUBSCRIBE";
         /// <summary>
         /// Send activity.
         /// </summary>
-        Send,
-        /// <summary>
-        /// Email open
-        /// </summary>
-        EMAIL_OPEN
+        public const string Send = "EMAIL_SEND";
     }
 }

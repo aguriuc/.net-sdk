@@ -113,25 +113,25 @@ namespace CTCT.Services
         ResultSet<SendActivity> GetSends(string accessToken, string apiKey, DateTime? createdSince, Pagination pag);
 
         /// <summary>
-        /// Get opt outs for a given contact.
+        /// Get unsubscribes for a given contact.
         /// </summary>
         /// <param name="accessToken">Constant Contact OAuth2 access token.</param>
         /// <param name="apiKey">The API key for the application</param>
         /// <param name="contactId">Contact id.</param>
         /// <param name="limit">Specifies the number of results per page in the output, from 1 - 500, default = 500.</param>
         /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
-        /// <returns>ResultSet containing a results array of @link OptOutActivity.</returns>
-        ResultSet<OptOutActivity> GetOptOuts(string accessToken, string apiKey, string contactId, int? limit, DateTime? createdSince);
+        /// <returns>ResultSet containing a results array of @link UnsubscribeActivity.</returns>
+        ResultSet<UnsubscribeActivity> GetUnsubscribes(string accessToken, string apiKey, string contactId, int? limit, DateTime? createdSince);
 
         /// <summary>
-        /// Get opt outs for a given contact.
+        /// Get unsubscribes for a given contact.
         /// </summary>
         /// <param name="accessToken">Constant Contact OAuth2 access token.</param>
         /// <param name="apiKey">The API key for the application</param>
         /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
         /// <param name="pag">Pagination object.</param>
-        /// <returns>ResultSet containing a results array of @link OptOutActivity.</returns>
-        ResultSet<OptOutActivity> GetOptOuts(string accessToken, string apiKey, DateTime? createdSince, Pagination pag);
+        /// <returns>ResultSet containing a results array of @link UnsubscribeActivity.</returns>
+        ResultSet<UnsubscribeActivity> GetUnsubscribes(string accessToken, string apiKey, DateTime? createdSince, Pagination pag);
 
         /// <summary>
         /// Get a summary of reporting data for a given contact.
@@ -141,5 +141,35 @@ namespace CTCT.Services
         /// <param name="contactId">Contact id.</param>
         /// <returns>Tracking summary.</returns>
         TrackingSummary GetSummary(string accessToken, string apiKey, string contactId);
+
+        /// <summary>
+        /// Get a summary of reporting data for a given contact.
+        /// </summary>
+        /// <param name="accessToken">Constant Contact OAuth2 access token.</param>
+        /// <param name="apiKey">The API key for the application</param>
+        /// <param name="contactId">Contact id.</param>
+        /// <returns>Tracking summary.</returns>
+        TrackingSummaryByEmailCampaign GetSummaryByEmailCampaign(string accessToken, string apiKey, string contactId);
+
+        /// <summary>
+        /// Get all activities for a given contact.
+        /// </summary>
+        /// <param name="accessToken">Constant Contact OAuth2 access token.</param>
+        /// <param name="apiKey">The API key for the application</param>
+        /// <param name="contactId">Contact id.</param>
+        /// <param name="limit">Specifies the number of results per page in the output, from 1 - 500, default = 500.</param>
+        /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
+        /// <returns>ResultSet containing a results array of @link BounceActivity</returns>
+        ResultSet<AllActivity> GetAllActivities(string accessToken, string apiKey, string contactId, int? limit, DateTime? createdSince);
+
+        /// <summary>
+        /// Get all activities for a given contact.
+        /// </summary>
+        /// <param name="accessToken">Constant Contact OAuth2 access token.</param>
+        /// <param name="apiKey">The API key for the application</param>
+        /// <param name="pag">Pagination object.</param>
+        /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
+        /// <returns>ResultSet containing a results array of @link BounceActivity</returns>
+        ResultSet<AllActivity> GetAllActivities(string accessToken, string apiKey, DateTime? createdSince, Pagination pag);
     }
 }

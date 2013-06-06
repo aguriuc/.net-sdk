@@ -298,8 +298,8 @@ namespace CTCT.Services
         /// <param name="campaignId">Campaign id.</param>
         /// <param name="limit">Specifies the number of results per page in the output, from 1 - 500, default = 500.</param>
         /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
-        /// <returns>ResultSet containing a results array of @link OptOutActivity.</returns>
-        public ResultSet<OptOutActivity> GetOptOuts(string accessToken, string apiKey, string campaignId, int? limit, DateTime? createdSince)
+        /// <returns>ResultSet containing a results array of @link UnsubscribeActivity.</returns>
+        public ResultSet<UnsubscribeActivity> GetOptOuts(string accessToken, string apiKey, string campaignId, int? limit, DateTime? createdSince)
         {
             return GetOptOuts(accessToken, apiKey, campaignId, limit, createdSince, null);
         }
@@ -311,8 +311,8 @@ namespace CTCT.Services
         /// <param name="apiKey">The API key for the application</param>
         /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
         /// <param name="pag">Pagination object.</param>
-        /// <returns>ResultSet containing a results array of @link OptOutActivity.</returns>
-        public ResultSet<OptOutActivity> GetOptOuts(string accessToken, string apiKey, DateTime? createdSince, Pagination pag)
+        /// <returns>ResultSet containing a results array of @link UnsubscribeActivity.</returns>
+        public ResultSet<UnsubscribeActivity> GetOptOuts(string accessToken, string apiKey, DateTime? createdSince, Pagination pag)
         {
             return GetOptOuts(accessToken, apiKey, null, null, createdSince, pag);
         }
@@ -326,10 +326,10 @@ namespace CTCT.Services
         /// <param name="limit">Specifies the number of results per page in the output, from 1 - 500, default = 500.</param>
         /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
         /// <param name="pag">Pagination object.</param>
-        /// <returns>ResultSet containing a results array of @link OptOutActivity.</returns>
-        private ResultSet<OptOutActivity> GetOptOuts(string accessToken, string apiKey, string campaignId, int? limit, DateTime? createdSince, Pagination pag)
+        /// <returns>ResultSet containing a results array of @link UnsubscribeActivity.</returns>
+        private ResultSet<UnsubscribeActivity> GetOptOuts(string accessToken, string apiKey, string campaignId, int? limit, DateTime? createdSince, Pagination pag)
         {
-            ResultSet<OptOutActivity> results = null;
+            ResultSet<UnsubscribeActivity> results = null;
             string url = (pag == null) ? Config.ConstructUrl(Config.Endpoints.CampaignTrackingUnsubscribes, new object[] { campaignId }, new object[] { "limit", limit, "created_since", Extensions.ToISO8601String(createdSince) }) : pag.GetNextUrl();
             CUrlResponse response = RestClient.Get(url, accessToken, apiKey);
 
@@ -340,7 +340,7 @@ namespace CTCT.Services
 
             if (response.HasData)
             {
-                results = Component.FromJSON<ResultSet<OptOutActivity>>(response.Body);
+                results = Component.FromJSON<ResultSet<UnsubscribeActivity>>(response.Body);
             }
 
             return results;
