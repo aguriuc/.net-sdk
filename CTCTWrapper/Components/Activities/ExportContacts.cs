@@ -37,7 +37,7 @@ namespace CTCT.Components.Activities
         /// Gets or sets list of id's to export.
         /// </summary>
         [DataMember(Name = "lists")]
-        public IList<string> Lists { get; set; }//= array();
+        public IList<string> Lists { get; set; }
         /// <summary>
         /// Gets or sets the column names.
         /// </summary>

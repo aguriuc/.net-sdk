@@ -11,6 +11,7 @@ using CTCT.Components.EmailCampaigns;
 using CTCT.Components;
 using CTCT.Components.Tracking;
 using System.Configuration;
+using System.IO;
 
 #endregion
 
@@ -521,18 +522,137 @@ namespace CTCT
         #region Activity service
 
         /// <summary>
-        /// Get a list of activities.
+        /// Adds or updates contacts to one or more contact lists.
+        /// </summary>
+        /// <param name="addContacts">AddContacts object.</param>
+        /// <returns>Returns an Activity object.</returns>
+        /// <exception cref="IllegalArgumentException">IllegalArgumentException</exception>
+        public Activity AddContacts(AddContacts addContacts)
+        {
+            if (addContacts == null)
+            {
+                throw new IllegalArgumentException(Config.Errors.ActivityOrId);
+            }
+
+            return ActivityService.AddContacts(AccessToken, APIKey, addContacts);
+        }
+
+        /// <summary>
+        /// Removes contacts from one ore more contact lists.
+        /// </summary>
+        /// <param name="emailAddresses">List of email addresses.</param>
+        /// <param name="lists">List of id's.</param>
+        /// <returns>Returns an Activity object.</returns>
+        /// <exception cref="IllegalArgumentException">IllegalArgumentException</exception>
+        public Activity RemoveContactsFromLists(IList<string> emailAddresses, IList<string> lists)
+        {
+            if (emailAddresses == null || lists == null)
+            {
+                throw new IllegalArgumentException(Config.Errors.ActivityOrId);
+            }
+
+            return ActivityService.RemoveContactsFromLists(AccessToken, APIKey, emailAddresses, lists);
+        }
+
+        /// <summary>
+        /// Clears all contacts from one or more contact lists.
+        /// </summary>
+        /// <param name="lists">Array of list id's to be cleared.</param>
+        /// <returns>Returns an Activity object.</returns>
+        /// <exception cref="IllegalArgumentException">IllegalArgumentException</exception>
+        public Activity ClearLists(IList<string> lists)
+        {
+            if (lists == null)
+            {
+                throw new IllegalArgumentException(Config.Errors.ActivityOrId);
+            }
+
+            return ActivityService.ClearLists(AccessToken, APIKey, lists);
+        }
+
+        /// <summary>
+        /// Exports contacts from the specified contact list to a CSV file.
+        /// </summary>
+        /// <param name="exportContacts">Export contacts object.</param>
+        /// <returns>Returns an Activity object.</returns>
+        /// <exception cref="IllegalArgumentException">IllegalArgumentException</exception>
+        public Activity ExportContacts(ExportContacts exportContacts)
+        {
+            if (exportContacts == null)
+            {
+                throw new IllegalArgumentException(Config.Errors.ActivityOrId);
+            }
+
+            return ActivityService.ExportContacts(AccessToken, APIKey, exportContacts);
+        }
+
+        /// <summary>
+        /// Returns a list with the last 50 bulk activities.
         /// </summary>
         /// <returns>Returns the list of activities.</returns>
-        public IList<Activity> GetActivities()
+        public IList<Activity> GetLast50BulkActivities()
         {
-            return ActivityService.GetActivities(AccessToken, APIKey);
+            return ActivityService.GetLast50BulkActivities(AccessToken, APIKey);
         }
 
         /// <summary>
         /// Get an activity.
         /// </summary>
         /// <param name="activityId">The activity identification.</param>
+        /// <param name="status">The activity status.</param>
+        /// <param name="type">The activity type.</param>
+        /// <returns>Returns the activity identified by its id.</returns>
+        public IList<Activity> GetDetailedReport(string activityId, ActivityStatus? status, ActivityType? type)
+        {
+            return ActivityService.GetDetailedReport(AccessToken, APIKey, activityId, status, type);
+        }
+
+        /// <summary>
+        /// Adds or updates contacts to one or more contact lists.
+        /// </summary>
+        /// <param name="filename">Multipart file name.</param>
+        /// <param name="lists">List of id's.</param>
+        /// <returns>Returns an Activity object.</returns>
+        /// <exception cref="IllegalArgumentException">IllegalArgumentException</exception>
+        public Activity AddContactsMultipart(string filename, IList<string> lists)
+        {
+            if (lists == null)
+            {
+                throw new IllegalArgumentException(Config.Errors.ActivityOrId);
+            }
+            if (String.IsNullOrEmpty(filename) || !File.Exists(filename))
+            {
+                throw new IllegalArgumentException(Config.Errors.FileMultipart);
+            }
+
+            return ActivityService.AddContactsMultipart(AccessToken, APIKey, filename, lists);
+        }
+
+        /// <summary>
+        /// Removes contacts from one ore more contact lists.
+        /// </summary>
+        /// <param name="filename">Multipart file name.</param>
+        /// <param name="lists">List of id's.</param>
+        /// <returns>Returns an Activity object.</returns>
+        /// <exception cref="IllegalArgumentException">IllegalArgumentException</exception>
+        public Activity RemoveContactsMultipart(string filename, IList<string> lists)
+        {
+            if (lists == null)
+            {
+                throw new IllegalArgumentException(Config.Errors.ActivityOrId);
+            }
+            if (String.IsNullOrEmpty(filename) || !File.Exists(filename))
+            {
+                throw new IllegalArgumentException(Config.Errors.FileMultipart);
+            }
+
+            return ActivityService.RemoveContactsMultipart(AccessToken, APIKey, filename, lists);
+        }
+
+        /// <summary>
+        /// Returns the status of the specified activity.
+        /// </summary>
+        /// <param name="activityId">The activity id.</param>
         /// <returns>Returns the activity identified by its id.</returns>
         /// <exception cref="IllegalArgumentException">IllegalArgumentException</exception>
         public Activity GetActivity(string activityId)
@@ -543,72 +663,6 @@ namespace CTCT
             }
 
             return ActivityService.GetActivity(AccessToken, APIKey, activityId);
-        }
-
-        /// <summary>
-        /// Create an Add Contacts Activity.
-        /// </summary>
-        /// <param name="addContacts">AddContacts object.</param>
-        /// <returns>Returns an Activity object.</returns>
-        /// <exception cref="IllegalArgumentException">IllegalArgumentException</exception>
-        public Activity CreateAddContactsActivity(AddContacts addContacts)
-        {
-            if (addContacts == null)
-            {
-                throw new IllegalArgumentException(Config.Errors.ActivityOrId);
-            }
-
-            return ActivityService.CreateAddContactsActivity(AccessToken, APIKey, addContacts);
-        }
-
-
-        /// <summary>
-        /// Create a Clear Lists Activity.
-        /// </summary>
-        /// <param name="lists">Array of list id's to be cleared.</param>
-        /// <returns>Returns an Activity object.</returns>
-        /// <exception cref="IllegalArgumentException">IllegalArgumentException</exception>
-        public Activity AddClearListsActivity(IList<string> lists)
-        {
-            if (lists == null)
-            {
-                throw new IllegalArgumentException(Config.Errors.ActivityOrId);
-            }
-
-            return ActivityService.AddClearListsActivity(AccessToken, APIKey, lists);
-        }
-
-        /// <summary>
-        /// Create an Export Contacts Activity.
-        /// </summary>
-        /// <param name="exportContacts">Export contacts object.</param>
-        /// <returns>Returns an Activity object.</returns>
-        /// <exception cref="IllegalArgumentException">IllegalArgumentException</exception>
-        public Activity AddExportContactsActivity(ExportContacts exportContacts)
-        {
-            if (exportContacts == null)
-            {
-                throw new IllegalArgumentException(Config.Errors.ActivityOrId);
-            }
-
-            return ActivityService.AddExportContactsActivity(AccessToken, APIKey, exportContacts);
-        }
-
-        /// <summary>
-        /// Create a Remove Contacts From Lists Activity.
-        /// </summary>
-        /// <param name="emailAddresses">List of email addresses.</param>
-        /// <param name="lists">List of id's.</param>
-        /// <returns>Returns an Activity object.</returns>
-        /// <exception cref="IllegalArgumentException">IllegalArgumentException</exception>
-        public Activity AddRemoveContactsFromListsActivity(IList<string> emailAddresses, IList<string> lists)
-        {
-            if (emailAddresses == null || lists == null)
-            {
-                throw new IllegalArgumentException(Config.Errors.ActivityOrId);
-            }
-
-            return ActivityService.AddRemoveContactsFromListsActivity(AccessToken, APIKey, emailAddresses, lists);
         }
 
         #endregion

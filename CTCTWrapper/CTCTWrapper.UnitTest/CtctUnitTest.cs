@@ -1324,7 +1324,7 @@ namespace CTCTWrapper.UnitTest
                 new List<string> { "1" },
                 null
                 );
-            var act = cc.CreateAddContactsActivity(add);
+            var act = cc.AddContacts(add);
             Assert.IsNotNull(act);
         }
 
@@ -1344,10 +1344,10 @@ namespace CTCTWrapper.UnitTest
                 lists,
                 null
                 );
-            Activity act = cc.CreateAddContactsActivity(add);
+            Activity act = cc.AddContacts(add);
             Assert.IsNotNull(act);
 
-            Activity activity = cc.AddRemoveContactsFromListsActivity(emailAddresses, lists);
+            Activity activity = cc.RemoveContactsFromLists(emailAddresses, lists);
 
             Assert.IsNotNull(activity);
             Assert.AreEqual(activity.ContactCount, emailAddresses.Count);
@@ -1369,10 +1369,10 @@ namespace CTCTWrapper.UnitTest
                 lists,
                 null
                 );
-            Activity act = cc.CreateAddContactsActivity(add);
+            Activity act = cc.AddContacts(add);
             Assert.IsNotNull(act);
 
-            Activity activity = cc.AddClearListsActivity(lists);
+            Activity activity = cc.ClearLists(lists);
 
             Assert.IsNotNull(activity);
             Assert.AreEqual(activity.Type, "CLEAR_CONTACTS_FROM_LISTS");
@@ -1387,7 +1387,7 @@ namespace CTCTWrapper.UnitTest
             ExportContacts export = new ExportContacts();
             export.Lists = lists;
 
-            Activity activity = cc.AddExportContactsActivity(export);
+            Activity activity = cc.ExportContacts(export);
 
             Assert.IsNotNull(activity);
             Assert.IsNotNull(activity.Id);
@@ -1407,10 +1407,10 @@ namespace CTCTWrapper.UnitTest
                 new List<string> { "1" },
                 null
                 );
-            Activity act = cc.CreateAddContactsActivity(add);
+            Activity act = cc.AddContacts(add);
             Assert.IsNotNull(act);
 
-            IList<Activity> list = cc.GetActivities();
+            IList<Activity> list = cc.GetLast50BulkActivities();
             foreach (Activity activity in list)
             {
                 Activity a = cc.GetActivity(activity.Id);

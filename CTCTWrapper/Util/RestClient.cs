@@ -85,12 +85,123 @@ namespace CTCT.Util
             request.Accept = "application/json";
             // Add token as HTTP header
             request.Headers.Add("Authorization", "Bearer " + accessToken);
-
+            
             if (data != null)
             {
                 // Convert the request contents to a byte array and include it
                 byte[] requestBodyBytes = System.Text.Encoding.UTF8.GetBytes(data);
                 request.GetRequestStream().Write(requestBodyBytes, 0, requestBodyBytes.Length);
+            }
+
+            // Now try to send the request
+            try
+            {
+                response = request.GetResponse() as HttpWebResponse;
+                // Expect the unexpected
+                if (request.HaveResponse == true && response == null)
+                {
+                    throw new WebException("Response was not returned or is null");
+                }
+                urlResponse.StatusCode = response.StatusCode;
+                if (response.StatusCode != HttpStatusCode.OK)
+                {
+                    throw new WebException("Response with status: " + response.StatusCode + " " + response.StatusDescription);
+                }
+            }
+            catch (WebException e)
+            {
+                if (e.Response != null)
+                {
+                    response = (HttpWebResponse)e.Response;
+                    urlResponse.IsError = true;
+                }
+            }
+            finally
+            {
+                if (response != null)
+                {
+                    // Get the response content
+                    using (StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
+                    {
+                        responseText = reader.ReadToEnd();
+                    }
+                    response.Close();
+                    if (urlResponse.IsError && responseText.Contains("error_message"))
+                    {
+                        urlResponse.Info = CUrlRequestError.FromJSON<IList<CUrlRequestError>>(responseText);
+                    }
+                    else
+                    {
+                        urlResponse.Body = responseText;
+                    }
+                }
+            }
+
+            return urlResponse;
+        }
+
+        /// <summary>
+        /// Post a multipart Http request.
+        /// </summary>
+        /// <param name="url">Request URL.</param>
+        /// <param name="accessToken">Constant Contact OAuth2 access token.</param>
+        /// <param name="apiKey">The API key for the application.</param>
+        /// <param name="fileToUpload">The file to be uploaded.</param>
+        /// <param name="extraParams">Extra parameters to be sent with the request.</param>
+        /// <returns>The response body, http info, and error (if one exists).</returns>
+        public CUrlResponse HttpPostMultipart(string url, string accessToken, string apiKey, string fileToUpload, NameValueCollection extraParams)
+        {
+            // Initialize the response
+            HttpWebResponse response = null;
+            string responseText = null;
+            CUrlResponse urlResponse = new CUrlResponse();
+            string boundary = "---------------------------" + DateTime.Now.Ticks.ToString("x");
+            byte[] boundaryBytes = System.Text.Encoding.ASCII.GetBytes(String.Concat("\r\n--", boundary, "\r\n"));
+            string address = url;
+            byte[] bytes = null;
+
+            if (!String.IsNullOrEmpty(apiKey))
+            {
+                address = String.Format("{0}{1}api_key={2}", url, url.Contains("?") ? "&" : "?", apiKey);
+            }
+            
+            HttpWebRequest request = WebRequest.Create(address) as HttpWebRequest;
+            request.Method = "POST";
+            request.ContentType = "multipart/form-data";
+            request.Accept = "application/json";
+            request.KeepAlive = true;
+            // Add token as HTTP header
+            request.Headers.Add("Authorization", "Bearer " + accessToken);
+
+            using (Stream requestStream = request.GetRequestStream())
+            {
+                // Prepare upload file section
+                requestStream.Write(boundaryBytes, 0, boundaryBytes.Length);
+                string header = String.Concat("Content-Disposition: form-data; name=\"file_name\"; filename=\"", Path.GetFileName(fileToUpload),
+                    "\"\r\nContent-Type: text/", Path.GetExtension(fileToUpload).Substring(1), "\r\n\r\n");
+                bytes = System.Text.Encoding.UTF8.GetBytes(header);
+                requestStream.Write(bytes, 0, bytes.Length);
+                byte[] buffer = new byte[32768];
+                int bytesRead;
+                // Get file content
+                using (FileStream fileStream = File.OpenRead(fileToUpload))
+                {
+                    while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) != 0)
+                    {
+                        requestStream.Write(buffer, 0, bytesRead);
+                    }
+                }
+
+                foreach (string key in extraParams.Keys)
+                {
+                    requestStream.Write(boundaryBytes, 0, boundaryBytes.Length);
+                    string data = String.Concat("Content-Disposition: form-data; name=\"", key, "\"\r\n\r\n", extraParams[key]);
+                    bytes = System.Text.Encoding.UTF8.GetBytes(data);
+                    requestStream.Write(bytes, 0, bytes.Length);
+                }
+
+                byte[] trailer = System.Text.Encoding.ASCII.GetBytes(String.Concat("\r\n--", boundary, "--\r\n"));
+                requestStream.Write(trailer, 0, trailer.Length);
             }
 
             // Now try to send the request

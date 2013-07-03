@@ -48,5 +48,16 @@ namespace CTCT.Util
         /// <param name="apiKey">The API key for the application</param>
         /// <returns>The response body, http info, and error (if one exists).</returns>
         CUrlResponse Delete(string url, string accessToken, string apiKey);
+
+        /// <summary>
+        /// Post a multipart Http request.
+        /// </summary>
+        /// <param name="url">Request URL.</param>
+        /// <param name="accessToken">Constant Contact OAuth2 access token.</param>
+        /// <param name="apiKey">The API key for the application.</param>
+        /// <param name="fileToUpload">The file to be uploaded.</param>
+        /// <param name="extraParams">Extra parameters to be sent with the request.</param>
+        /// <returns>The response body, http info, and error (if one exists).</returns>
+        CUrlResponse HttpPostMultipart(string url, string accessToken, string apiKey, string fileToUpload, NameValueCollection extraParams);
     }
 }

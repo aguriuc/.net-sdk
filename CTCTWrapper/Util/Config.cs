@@ -359,6 +359,10 @@ namespace CTCT.Util
             /// EmailCampaign or id error.
             /// </summary>
             public const string EmailCampaignOrId = "Only an interger or EmailCampaign are allowed for this method.";
+            /// <summary>
+            /// File multipart error.
+            /// </summary>
+            public const string FileMultipart = "File not specified or does not exists.";
         }
 
         /// <summary>

@@ -35,34 +35,34 @@ namespace CTCT.Components.Tracking
         public string EmailAddress { get; set; }
     }
 
-    /// <summary>
-    /// Activity type.
-    /// </summary>
-    public struct ActivityType
-    {
-        /// <summary>
-        /// Bounce activity.
-        /// </summary>
-        public const string Bounce = "EMAIL_BOUNCE";
-        /// <summary>
-        /// Click activity.
-        /// </summary>
-        public const string Click = "EMAIL_CLICK";
-        /// <summary>
-        /// Forward activity.
-        /// </summary>
-        public const string Forward = "EMAIL_FORWARD";
-        /// <summary>
-        /// Open activity.
-        /// </summary>
-        public const string Open = "EMAIL_OPEN";
-        /// <summary>
-        /// Unsubscribe activity.
-        /// </summary>
-        public const string Unsubscribe = "EMAIL_UNSUBSCRIBE";
-        /// <summary>
-        /// Send activity.
-        /// </summary>
-        public const string Send = "EMAIL_SEND";
-    }
+    ///// <summary>
+    ///// Activity type.
+    ///// </summary>
+    //public struct ActivityType
+    //{
+    //    /// <summary>
+    //    /// Bounce activity.
+    //    /// </summary>
+    //    public const string Bounce = "EMAIL_BOUNCE";
+    //    /// <summary>
+    //    /// Click activity.
+    //    /// </summary>
+    //    public const string Click = "EMAIL_CLICK";
+    //    /// <summary>
+    //    /// Forward activity.
+    //    /// </summary>
+    //    public const string Forward = "EMAIL_FORWARD";
+    //    /// <summary>
+    //    /// Open activity.
+    //    /// </summary>
+    //    public const string Open = "EMAIL_OPEN";
+    //    /// <summary>
+    //    /// Unsubscribe activity.
+    //    /// </summary>
+    //    public const string Unsubscribe = "EMAIL_UNSUBSCRIBE";
+    //    /// <summary>
+    //    /// Send activity.
+    //    /// </summary>
+    //    public const string Send = "EMAIL_SEND";
+    //}
 }
