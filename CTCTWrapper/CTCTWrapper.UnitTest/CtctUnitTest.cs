@@ -212,6 +212,7 @@ namespace CTCTWrapper.UnitTest
         {
             var cc = new ConstantContact(ApiKey, AccessToken);
             cc.AddContactsMultipart(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "contacts.csv"), new List<string>() { "1" });
+            cc.AddContactsMultipart(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "contacts.xlsx"), new List<string>() { "1" });
         }
 
         [TestMethod]

@@ -194,7 +194,7 @@ namespace CTCT.Util
                 requestStream.Write(buffer, 0, buffer.Length);
                 buffer = Encoding.UTF8.GetBytes(String.Format("Content-Disposition: form-data; name=\"data\" {0}", Environment.NewLine));
                 requestStream.Write(buffer, 0, buffer.Length);
-                buffer = Encoding.ASCII.GetBytes(String.Format("Content-Type: text/{0}{1}{1}", Path.GetExtension(fileToUpload).Substring(1), Environment.NewLine));
+                buffer = Encoding.ASCII.GetBytes(String.Format("Content-Type: {0}{1}{1}", GetMIMEContentType(fileToUpload), Environment.NewLine));
                 requestStream.Write(buffer, 0, buffer.Length);
                 using (FileStream file = File.OpenRead(fileToUpload))
                 {
@@ -253,6 +253,36 @@ namespace CTCT.Util
             }
 
             return urlResponse;
+        }
+
+        /// <summary>
+        /// Generates the MIME type for Content-Type based on the file extension.
+        /// </summary>
+        /// <param name="fileToUpload">File to upload.</param>
+        /// <returns></returns>
+        private string GetMIMEContentType(string fileToUpload)
+        {
+            string mime = null;
+            string extension = Path.GetExtension(fileToUpload).Substring(1).ToUpper();
+            switch (extension)
+            {
+                case "TXT":
+                    mime = "text/plain";
+                    break;
+                case "CSV":
+                    mime = "text/csv";
+                    break;
+                case "XLS":
+                    mime = "application/vnd.ms-excel";
+                    break;
+                case "XLSX":
+                    mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                    break;
+                default:
+                    throw new Exception("File extension not supported.");
+            }
+
+            return mime;
         }
     }
 }
