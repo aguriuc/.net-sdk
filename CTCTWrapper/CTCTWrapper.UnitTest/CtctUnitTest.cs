@@ -22,9 +22,9 @@ namespace CTCTWrapper.UnitTest
     {
         #region Private Constants
 
-        private const string CustomerEmail = "cristian.dinca@osf-global.com";
-        private const string ApiKey = "88dtga4vhmb4as3q35cd6zhr";
-        private const string AccessToken = "2bc8f839-1768-480e-b101-d67fc96c22fb";
+        private const string CustomerEmail = "[valid email address]";
+        private const string ApiKey = "[API key]";
+        private const string AccessToken = "[Access token]";
 
         #endregion Private Constants
 
