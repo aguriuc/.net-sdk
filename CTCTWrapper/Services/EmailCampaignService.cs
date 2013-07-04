@@ -25,8 +25,35 @@ namespace CTCT.Services
         /// <returns>Returns a list of campaigns.</returns>
         public IList<EmailCampaign> GetCampaigns(string accessToken, string apiKey, CampaignStatus? status, int? limit, DateTime? modifiedSince)
         {
+            return GetCampaigns(accessToken, apiKey, status, limit, modifiedSince, null);
+        }
+
+        /// <summary>
+        /// Get a set of campaigns.
+        /// </summary>
+        /// <param name="accessToken">Access token.</param>
+        /// <param name="apiKey">The API key for the application</param>
+        /// <param name="pag">Pagination object.</param>
+        /// <returns>Returns a list of campaigns.</returns>
+        public IList<EmailCampaign> GetCampaigns(string accessToken, string apiKey, Pagination pag)
+        {
+            return GetCampaigns(accessToken, apiKey, null, null, null, pag);
+        }
+
+        /// <summary>
+        /// Get a set of campaigns.
+        /// </summary>
+        /// <param name="accessToken">Access token.</param>
+        /// <param name="apiKey">The API key for the application</param>
+        /// <param name="status">Returns list of email campaigns with specified status.</param>
+        /// <param name="limit">Specifies the number of results per page in the output, from 1 - 500, default = 500.</param>
+        /// <param name="modifiedSince">limit campaigns to campaigns modified since the supplied date</param>
+        /// <param name="pag">Pagination object.</param>
+        /// <returns>Returns a list of campaigns.</returns>
+        private IList<EmailCampaign> GetCampaigns(string accessToken, string apiKey, CampaignStatus? status, int? limit, DateTime? modifiedSince, Pagination pag)
+        {
             IList<EmailCampaign> campaigns = new List<EmailCampaign>();
-            string url = String.Concat(Config.Endpoints.BaseUrl, Config.Endpoints.Campaigns, GetQueryParameters(new object[] { "status", status, "limit", limit, "modified_since", Extensions.ToISO8601String(modifiedSince) }));
+            string url = (pag == null) ? String.Concat(Config.Endpoints.BaseUrl, Config.Endpoints.Campaigns, GetQueryParameters(new object[] { "status", status, "limit", limit, "modified_since", Extensions.ToISO8601String(modifiedSince) })) : pag.GetNextUrl();
             CUrlResponse response = RestClient.Get(url, accessToken, apiKey);
 
             if (response.IsError)

@@ -6,6 +6,7 @@ using System.Net;
 using System.Collections.Specialized;
 using System.IO;
 using System.Configuration;
+using System.Globalization;
 
 namespace CTCT.Util
 {
@@ -155,10 +156,8 @@ namespace CTCT.Util
             HttpWebResponse response = null;
             string responseText = null;
             CUrlResponse urlResponse = new CUrlResponse();
-            string boundary = "---------------------------" + DateTime.Now.Ticks.ToString("x");
-            byte[] boundaryBytes = System.Text.Encoding.ASCII.GetBytes(String.Concat("\r\n--", boundary, "\r\n"));
             string address = url;
-            byte[] bytes = null;
+            byte[] buffer;
 
             if (!String.IsNullOrEmpty(apiKey))
             {
@@ -167,41 +166,46 @@ namespace CTCT.Util
             
             HttpWebRequest request = WebRequest.Create(address) as HttpWebRequest;
             request.Method = "POST";
-            request.ContentType = "multipart/form-data";
             request.Accept = "application/json";
-            request.KeepAlive = true;
+            
+            // Request content type
+            var boundary = String.Concat("---------------------------", DateTime.Now.Ticks.ToString("x", NumberFormatInfo.InvariantInfo));
+            request.ContentType = String.Concat("multipart/form-data; boundary=", boundary);
+            boundary = String.Concat("--", boundary);
+            
             // Add token as HTTP header
             request.Headers.Add("Authorization", "Bearer " + accessToken);
 
             using (Stream requestStream = request.GetRequestStream())
             {
-                // Prepare upload file section
-                requestStream.Write(boundaryBytes, 0, boundaryBytes.Length);
-                string header = String.Concat("Content-Disposition: form-data; name=\"file_name\"; filename=\"", Path.GetFileName(fileToUpload),
-                    "\"\r\nContent-Type: text/", Path.GetExtension(fileToUpload).Substring(1), "\r\n\r\n");
-                bytes = System.Text.Encoding.UTF8.GetBytes(header);
-                requestStream.Write(bytes, 0, bytes.Length);
-                byte[] buffer = new byte[32768];
-                int bytesRead;
-                // Get file content
-                using (FileStream fileStream = File.OpenRead(fileToUpload))
+                // Add multipart parameters
+                foreach (string name in extraParams.Keys)
                 {
-                    while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) != 0)
-                    {
-                        requestStream.Write(buffer, 0, bytesRead);
-                    }
+                    buffer = Encoding.ASCII.GetBytes(boundary + Environment.NewLine);
+                    requestStream.Write(buffer, 0, buffer.Length);
+                    buffer = Encoding.ASCII.GetBytes(String.Format("Content-Disposition: form-data; name=\"{0}\"{1}{1}", name, Environment.NewLine));
+                    requestStream.Write(buffer, 0, buffer.Length);
+                    buffer = Encoding.UTF8.GetBytes(extraParams[name] + Environment.NewLine);
+                    requestStream.Write(buffer, 0, buffer.Length);
                 }
 
-                foreach (string key in extraParams.Keys)
+                // Add multipart file
+                buffer = Encoding.ASCII.GetBytes(boundary + Environment.NewLine);
+                requestStream.Write(buffer, 0, buffer.Length);
+                buffer = Encoding.UTF8.GetBytes(String.Format("Content-Disposition: form-data; name=\"data\" {0}", Environment.NewLine));
+                requestStream.Write(buffer, 0, buffer.Length);
+                buffer = Encoding.ASCII.GetBytes(String.Format("Content-Type: text/{0}{1}{1}", Path.GetExtension(fileToUpload).Substring(1), Environment.NewLine));
+                requestStream.Write(buffer, 0, buffer.Length);
+                using (FileStream file = File.OpenRead(fileToUpload))
                 {
-                    requestStream.Write(boundaryBytes, 0, boundaryBytes.Length);
-                    string data = String.Concat("Content-Disposition: form-data; name=\"", key, "\"\r\n\r\n", extraParams[key]);
-                    bytes = System.Text.Encoding.UTF8.GetBytes(data);
-                    requestStream.Write(bytes, 0, bytes.Length);
+                    file.CopyTo(requestStream);
+                    buffer = Encoding.ASCII.GetBytes(Environment.NewLine);
+                    requestStream.Write(buffer, 0, buffer.Length);
                 }
 
-                byte[] trailer = System.Text.Encoding.ASCII.GetBytes(String.Concat("\r\n--", boundary, "--\r\n"));
-                requestStream.Write(trailer, 0, trailer.Length);
+                // Add multipart end
+                var boundaryBuffer = Encoding.ASCII.GetBytes(String.Concat(boundary, "--"));
+                requestStream.Write(boundaryBuffer, 0, boundaryBuffer.Length);
             }
 
             // Now try to send the request

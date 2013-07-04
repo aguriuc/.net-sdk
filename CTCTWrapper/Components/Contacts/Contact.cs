@@ -159,27 +159,27 @@ namespace CTCT.Components.Contacts
     public struct Status
     {
         /// <summary>
-        /// Active.
+        /// Contact is an active member of a contactlist.
         /// </summary>
         public const string Active = "ACTIVE";
         /// <summary>
-        /// Unconfirmed.
+        /// Contact has not confirmed their email address.
         /// </summary>
         public const string Unconfirmed = "UNCONFIRMED";
         /// <summary>
-        /// Output.
+        /// Contact has unsubscribed from the account owner's account and is on the Do Not Mail list; they cannot be manually added to any contactlist.
         /// </summary>
-        public const string Output = "OPTOUT";
+        public const string Optout = "OPTOUT";
         /// <summary>
-        /// Removed.
+        /// Contact has been taken off all contactlists, and can be added to a contactlist.
         /// </summary>
         public const string Removed = "REMOVED";
         /// <summary>
-        /// NonSubscriber.
+        /// Someone who is not a contact, but has registered for an event the account owner has created.
         /// </summary>
         public const string NonSubscriber = "NON_SUBSCRIBER";
         /// <summary>
-        /// Visitor.
+        /// A person who has "liked" an account owner's social campaign page.
         /// </summary>
         public const string Visitor = "VISITOR";
     }

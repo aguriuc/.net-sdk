@@ -10,6 +10,7 @@ using CTCT.Components.EmailCampaigns;
 using CTCT.Components.Tracking;
 using CTCT.Components;
 using CTCT.Exceptions;
+using System.IO;
 
 namespace CTCTWrapper.UnitTest
 {
@@ -21,9 +22,9 @@ namespace CTCTWrapper.UnitTest
     {
         #region Private Constants
 
-        private const string CustomerEmail = "verified_email_address@...";
-        private const string ApiKey = "apiKey";
-        private const string AccessToken = "accessToken";
+        private const string CustomerEmail = "cristian.dinca@osf-global.com";
+        private const string ApiKey = "88dtga4vhmb4as3q35cd6zhr";
+        private const string AccessToken = "2bc8f839-1768-480e-b101-d67fc96c22fb";
 
         #endregion Private Constants
 
@@ -207,6 +208,13 @@ namespace CTCTWrapper.UnitTest
         }
 
         [TestMethod]
+        public void LiveAddcontactsMultipartTest()
+        {
+            var cc = new ConstantContact(ApiKey, AccessToken);
+            cc.AddContactsMultipart(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "contacts.csv"), new List<string>() { "1" });
+        }
+
+        [TestMethod]
         public void LiveGetContactFromListTest()
         {
             var cc = new ConstantContact(ApiKey, AccessToken);
@@ -227,7 +235,7 @@ namespace CTCTWrapper.UnitTest
             Assert.IsNotNull(contacts.Results);
             Assert.AreEqual(3, contacts.Results.Count);
 
-            contacts = cc.GetContactsFromList(DateTime.Now.AddMonths(-1), contacts.Meta.Pagination);
+            contacts = cc.GetContactsFromList(contacts.Meta.Pagination);
             Assert.IsNotNull(contacts);
             Assert.IsNotNull(contacts.Meta);
             Assert.IsNotNull(contacts.Meta.Pagination);

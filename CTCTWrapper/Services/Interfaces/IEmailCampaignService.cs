@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CTCT.Components.EmailCampaigns;
+using CTCT.Components;
 namespace CTCT.Services
 {
     /// <summary>
@@ -18,6 +19,15 @@ namespace CTCT.Services
         /// <param name="modifiedSince">limit campaigns to campaigns modified since the supplied date</param>
         /// <returns>Returns a list of campaigns.</returns>
         IList<EmailCampaign> GetCampaigns(string accessToken, string apiKey, CampaignStatus? status, int? limit, DateTime? modifiedSince);
+
+        /// <summary>
+        /// Get a set of campaigns.
+        /// </summary>
+        /// <param name="accessToken">Access token.</param>
+        /// <param name="apiKey">The API key for the application</param>
+        /// <param name="pag">Pagination object.</param>
+        /// <returns>Returns a list of campaigns.</returns>
+        IList<EmailCampaign> GetCampaigns(string accessToken, string apiKey, Pagination pag);
 
         /// <summary>
         /// Get campaign details for a specific campaign.

@@ -7,6 +7,7 @@ using CTCT.Util;
 using CTCT.Components;
 using CTCT.Exceptions;
 using System.Collections.Specialized;
+using System.IO;
 
 namespace CTCT.Services
 {
@@ -206,6 +207,7 @@ namespace CTCT.Services
             Activity activity = null;
             string url = String.Concat(Config.Endpoints.BaseUrl, Config.Endpoints.AddContactsActivity);
             NameValueCollection nvc = new NameValueCollection();
+            nvc.Add("file_name", Path.GetFileName(filename));
             nvc.Add("lists", String.Join(",", lists.ToArray()));
             CUrlResponse response = RestClient.HttpPostMultipart(url, accessToken, apiKey, filename, nvc);
 
@@ -235,6 +237,7 @@ namespace CTCT.Services
             Activity activity = null;
             string url = String.Concat(Config.Endpoints.BaseUrl, Config.Endpoints.RemoveFromListsActivity);
             NameValueCollection nvc = new NameValueCollection();
+            nvc.Add("file_name", Path.GetFileName(filename));
             nvc.Add("lists", String.Join(",", lists.ToArray()));
             CUrlResponse response = RestClient.HttpPostMultipart(url, accessToken, apiKey, filename, nvc);
 

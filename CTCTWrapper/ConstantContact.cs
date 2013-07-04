@@ -213,24 +213,23 @@ namespace CTCT
         }
 
         /// <summary>
-        /// Get an array of contacts.
-        /// </summary>
-        /// <param name="modifiedSince">limit contacts retrieved to contacts modified since the supplied date</param>
-        /// <param name="pag">Pagination object.</param>
-        /// <returns>Returns a list of contacts.</returns>
-        public ResultSet<Contact> GetContacts(DateTime? modifiedSince, Pagination pag)
-        {
-            return ContactService.GetContacts(AccessToken, APIKey, modifiedSince, pag);
-        }
-
-        /// <summary>
         /// Get a set of contacts.
         /// </summary>
         /// <param name="modifiedSince">limit contacts retrieved to contacts modified since the supplied date</param>
         /// <returns>Returns a list of contacts.</returns>
         public ResultSet<Contact> GetContacts(DateTime? modifiedSince)
         {
-            return ContactService.GetContacts(AccessToken, APIKey, modifiedSince, null);
+            return ContactService.GetContacts(AccessToken, APIKey, null, null, modifiedSince);
+        }
+
+        /// <summary>
+        /// Get an array of contacts.
+        /// </summary>
+        /// <param name="pag">Pagination object.</param>
+        /// <returns>Returns a list of contacts.</returns>
+        public ResultSet<Contact> GetContacts(Pagination pag)
+        {
+            return ContactService.GetContacts(AccessToken, APIKey, pag);
         }
 
         /// <summary>
@@ -509,12 +508,11 @@ namespace CTCT
         /// <summary>
         /// Get contacts after pagination object received.
         /// </summary>
-        /// <param name="modifiedSince">limit contacts retrieved to contacts modified since the supplied date</param>
         /// <param name="pag">Pagination object.</param>
         /// <returns>Returns a list of contacts.</returns>
-        public ResultSet<Contact> GetContactsFromList(DateTime? modifiedSince, Pagination pag)
+        public ResultSet<Contact> GetContactsFromList(Pagination pag)
         {
-            return ListService.GetContactsFromList(AccessToken, APIKey, modifiedSince, pag);
+            return ListService.GetContactsFromList(AccessToken, APIKey, pag);
         }
 
         #endregion
@@ -822,12 +820,11 @@ namespace CTCT
         /// <summary>
         /// Get clicks for a given campaign.
         /// </summary>
-        /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
         /// <param name="pag">Pagination object.</param>
         /// <returns>ResultSet containing a results array of @link ClickActivity.</returns>
-        public ResultSet<ClickActivity> GetClicks(DateTime? createdSince, Pagination pag)
+        public ResultSet<ClickActivity> GetClicks(Pagination pag)
         {
-            return CampaignTrackingService.GetClicks(AccessToken, APIKey, createdSince, pag);
+            return CampaignTrackingService.GetClicks(AccessToken, APIKey, pag);
         }
 
         /// <summary>
@@ -851,12 +848,11 @@ namespace CTCT
         /// <summary>
         /// Get forwards for a given campaign.
         /// </summary>
-        /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
         /// <param name="pag">Pagination object.</param>
         /// <returns>ResultSet containing a results array of @link ForwardActivity.</returns>
-        public ResultSet<ForwardActivity> GetCampaignTrackingForwards(DateTime? createdSince, Pagination pag)
+        public ResultSet<ForwardActivity> GetCampaignTrackingForwards(Pagination pag)
         {
-            return CampaignTrackingService.GetForwards(AccessToken, APIKey, createdSince, pag);
+            return CampaignTrackingService.GetForwards(AccessToken, APIKey, pag);
         }
 
         /// <summary>
@@ -879,12 +875,11 @@ namespace CTCT
         /// <summary>
         /// Get opens for a given campaign.
         /// </summary>
-        /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
         /// <param name="pag">Pagination object.</param>
         /// <returns>ResultSet containing a results array of @link OpenActivity.</returns>
-        public ResultSet<OpenActivity> GetCampaignTrackingOpens(DateTime? createdSince, Pagination pag)
+        public ResultSet<OpenActivity> GetCampaignTrackingOpens(Pagination pag)
         {
-            return CampaignTrackingService.GetOpens(AccessToken, APIKey, createdSince, pag);
+            return CampaignTrackingService.GetOpens(AccessToken, APIKey, pag);
         }
 
         /// <summary>
@@ -907,12 +902,11 @@ namespace CTCT
         /// <summary>
         /// Get sends for a given campaign.
         /// </summary>
-        /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
         /// <param name="pag">Pagination object.</param>
         /// <returns>ResultSet containing a results array of @link SendActivity</returns>
-        public ResultSet<SendActivity> GetCampaignTrackingSends(DateTime? createdSince, Pagination pag)
+        public ResultSet<SendActivity> GetCampaignTrackingSends(Pagination pag)
         {
-            return CampaignTrackingService.GetSends(AccessToken, APIKey, createdSince, pag);
+            return CampaignTrackingService.GetSends(AccessToken, APIKey, pag);
         }
 
         /// <summary>
@@ -936,12 +930,11 @@ namespace CTCT
         /// <summary>
         /// Get opt outs for a given campaign.
         /// </summary>
-        /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
         /// <param name="pag">Pagination object.</param>
         /// <returns>ResultSet containing a results array of @link UnsubscribeActivity.</returns>
-        public ResultSet<UnsubscribeActivity> GetCampaignTrackingOptOuts(DateTime? createdSince, Pagination pag)
+        public ResultSet<UnsubscribeActivity> GetCampaignTrackingOptOuts(Pagination pag)
         {
-            return CampaignTrackingService.GetOptOuts(AccessToken, APIKey, createdSince, pag);
+            return CampaignTrackingService.GetOptOuts(AccessToken, APIKey, pag);
         }
 
         /// <summary>
@@ -1035,12 +1028,11 @@ namespace CTCT
         /// <summary>
         /// Get clicks for a given contact.
         /// </summary>
-        /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
         /// <param name="pag">Pagination object.</param>
         /// <returns>ResultSet containing a results array of @link ClickActivity</returns>
-        public ResultSet<ClickActivity> GetContactTrackingClicks(DateTime? createdSince, Pagination pag)
+        public ResultSet<ClickActivity> GetContactTrackingClicks(Pagination pag)
         {
-            return ContactTrackingService.GetClicks(AccessToken, APIKey, createdSince, pag);
+            return ContactTrackingService.GetClicks(AccessToken, APIKey, pag);
         }
 
         /// <summary>
@@ -1077,12 +1069,11 @@ namespace CTCT
         /// <summary>
         /// Get forwards for a given contact.
         /// </summary>
-        /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
         /// <param name="pag">Pagination object.</param>
         /// <returns>ResultSet containing a results array of @link ForwardActivity.</returns>
-        public ResultSet<ForwardActivity> GetContactTrackingForwards(DateTime? createdSince, Pagination pag)
+        public ResultSet<ForwardActivity> GetContactTrackingForwards(Pagination pag)
         {
-            return ContactTrackingService.GetForwards(AccessToken, APIKey, createdSince, pag);
+            return ContactTrackingService.GetForwards(AccessToken, APIKey, pag);
         }
 
         /// <summary>
@@ -1118,12 +1109,11 @@ namespace CTCT
         /// <summary>
         /// Get opens for a given contact.
         /// </summary>
-        /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
         /// <param name="pag">Pagination object.</param>
         /// <returns>ResultSet containing a results array of @link OpenActivity.</returns>
-        public ResultSet<OpenActivity> GetContactTrackingOpens(DateTime? createdSince, Pagination pag)
+        public ResultSet<OpenActivity> GetContactTrackingOpens(Pagination pag)
         {
-            return ContactTrackingService.GetOpens(AccessToken, APIKey, createdSince, pag);
+            return ContactTrackingService.GetOpens(AccessToken, APIKey, pag);
         }
 
         /// <summary>
@@ -1159,12 +1149,11 @@ namespace CTCT
         /// <summary>
         /// Get sends for a given contact.
         /// </summary>
-        /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
         /// <param name="pag">Pagination object.</param>
         /// <returns>ResultSet containing a results array of @link SendActivity.</returns>
-        public ResultSet<SendActivity> GetContactTrackingSends(DateTime? createdSince, Pagination pag)
+        public ResultSet<SendActivity> GetContactTrackingSends(Pagination pag)
         {
-            return ContactTrackingService.GetSends(AccessToken, APIKey, createdSince, pag);
+            return ContactTrackingService.GetSends(AccessToken, APIKey, pag);
         }
 
         /// <summary>
@@ -1200,12 +1189,11 @@ namespace CTCT
         /// <summary>
         /// Get opt outs for a given contact.
         /// </summary>
-        /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
         /// <param name="pag">Pagination object.</param>
         /// <returns>ResultSet containing a results array of @link UnsubscribeActivity.</returns>
-        public ResultSet<UnsubscribeActivity> GetContactTrackingUnsubscribes(DateTime? createdSince, Pagination pag)
+        public ResultSet<UnsubscribeActivity> GetContactTrackingUnsubscribes(Pagination pag)
         {
-            return ContactTrackingService.GetUnsubscribes(AccessToken, APIKey, createdSince, pag);
+            return ContactTrackingService.GetUnsubscribes(AccessToken, APIKey, pag);
         }
 
         /// <summary>
@@ -1242,11 +1230,10 @@ namespace CTCT
         /// Get all activities for a given contact.
         /// </summary>
         /// <param name="pag">Pagination object.</param>
-        /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
         /// <returns>ResultSet containing a results array of @link AllActivity</returns>
-        public ResultSet<AllActivity> GetContactTrackingAll(DateTime? createdSince, Pagination pag)
+        public ResultSet<AllActivity> GetContactTrackingAll(Pagination pag)
         {
-            return ContactTrackingService.GetAllActivities(AccessToken, APIKey, createdSince, pag);
+            return ContactTrackingService.GetAllActivities(AccessToken, APIKey, pag);
         }
 
         /// <summary>
@@ -1387,9 +1374,9 @@ namespace CTCT
         #region Account service
 
         /// <summary>
-        /// Retrieve a list of all the account owner's email addresses
+        /// Retrieve a list of all the account owner's email addresses.
         /// </summary>
-        /// <returns>list of all verified account owner's email addresses</returns>
+        /// <returns>list of all verified account owner's email addresses.</returns>
         public IList<VerifiedEmailAddress> GetVerifiedEmailAddress()
         {
             return AccountService.GetVerifiedEmailAddress(AccessToken, APIKey);

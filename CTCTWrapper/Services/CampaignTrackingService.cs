@@ -84,12 +84,11 @@ namespace CTCT.Services
         /// </summary>
         /// <param name="accessToken">Constant Contact OAuth2 access token.</param>
         /// <param name="apiKey">The API key for the application</param>
-        /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
         /// <param name="pag">Pagination object.</param>
         /// <returns>ResultSet containing a results array of @link ClickActivity.</returns>
-        public ResultSet<ClickActivity> GetClicks(string accessToken, string apiKey, DateTime? createdSince, Pagination pag)
+        public ResultSet<ClickActivity> GetClicks(string accessToken, string apiKey, Pagination pag)
         {
-            return GetClicks(accessToken, apiKey, null, null, null, createdSince, pag);
+            return GetClicks(accessToken, apiKey, null, null, null, null, pag);
         }
 
         /// <summary>
@@ -141,12 +140,11 @@ namespace CTCT.Services
         /// </summary>
         /// <param name="accessToken">Constant Contact OAuth2 access token.</param>
         /// <param name="apiKey">The API key for the application</param>
-        /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
         /// <param name="pag">Pagination object.</param>
         /// <returns>ResultSet containing a results array of @link ForwardActivity.</returns>
-        public ResultSet<ForwardActivity> GetForwards(string accessToken, string apiKey, DateTime? createdSince, Pagination pag)
+        public ResultSet<ForwardActivity> GetForwards(string accessToken, string apiKey, Pagination pag)
         {
-            return GetForwards(accessToken, apiKey, null, null, createdSince, pag);
+            return GetForwards(accessToken, apiKey, null, null, null, pag);
         }
 
         /// <summary>
@@ -197,12 +195,11 @@ namespace CTCT.Services
         /// </summary>
         /// <param name="accessToken">Constant Contact OAuth2 access token.</param>
         /// <param name="apiKey">The API key for the application</param>
-        /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
         /// <param name="pag">Pagination object.</param>
         /// <returns>ResultSet containing a results array of @link OpenActivity.</returns>
-        public ResultSet<OpenActivity> GetOpens(string accessToken, string apiKey, DateTime? createdSince, Pagination pag)
+        public ResultSet<OpenActivity> GetOpens(string accessToken, string apiKey, Pagination pag)
         {
-            return GetOpens(accessToken, apiKey, null, null, createdSince, pag);
+            return GetOpens(accessToken, apiKey, null, null, null, pag);
         }
 
         /// <summary>
@@ -253,12 +250,11 @@ namespace CTCT.Services
         /// </summary>
         /// <param name="accessToken">Constant Contact OAuth2 access token.</param>
         /// <param name="apiKey">The API key for the application</param>
-        /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
         /// <param name="pag">Pagination object.</param>
         /// <returns>ResultSet containing a results array of @link SendActivity</returns>
-        public ResultSet<SendActivity> GetSends(string accessToken, string apiKey, DateTime? createdSince, Pagination pag)
+        public ResultSet<SendActivity> GetSends(string accessToken, string apiKey, Pagination pag)
         {
-            return GetSends(accessToken, apiKey, null, null, createdSince, pag);
+            return GetSends(accessToken, apiKey, null, null, null, pag);
         }
 
         /// <summary>
@@ -309,12 +305,11 @@ namespace CTCT.Services
         /// </summary>
         /// <param name="accessToken">Constant Contact OAuth2 access token.</param>
         /// <param name="apiKey">The API key for the application</param>
-        /// <param name="createdSince">filter for activities created since the supplied date in the collection</param>
         /// <param name="pag">Pagination object.</param>
         /// <returns>ResultSet containing a results array of @link UnsubscribeActivity.</returns>
-        public ResultSet<UnsubscribeActivity> GetOptOuts(string accessToken, string apiKey, DateTime? createdSince, Pagination pag)
+        public ResultSet<UnsubscribeActivity> GetOptOuts(string accessToken, string apiKey, Pagination pag)
         {
-            return GetOptOuts(accessToken, apiKey, null, null, createdSince, pag);
+            return GetOptOuts(accessToken, apiKey, null, null, null, pag);
         }
 
         /// <summary>

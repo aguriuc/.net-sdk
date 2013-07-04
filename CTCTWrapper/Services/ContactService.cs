@@ -30,12 +30,11 @@ namespace CTCT.Services
         /// </summary>
         /// <param name="accessToken">Constant Contact OAuth2 access token.</param>
         /// <param name="apiKey">The API key for the application</param>
-        /// <param name="modifiedSince">limit contact to contacts modified since the supplied date</param>
         /// <param name="pag">Pagination object.</param>
         /// <returns>Returns a list of contacts.</returns>
-        public ResultSet<Contact> GetContacts(string accessToken, string apiKey, DateTime? modifiedSince, Pagination pag)
+        public ResultSet<Contact> GetContacts(string accessToken, string apiKey, Pagination pag)
         {
-            return GetContacts(accessToken, apiKey, null, null, modifiedSince, pag);
+            return GetContacts(accessToken, apiKey, null, null, null, pag);
         }
 
         /// <summary>
