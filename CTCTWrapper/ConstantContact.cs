@@ -608,6 +608,29 @@ namespace CTCT
         /// <summary>
         /// Adds or updates contacts to one or more contact lists.
         /// </summary>
+        /// <remarks>
+        /// The currently supported file types are: text, csv, xls, xlsx.
+        /// 
+        /// The import file is constructed of columns containing contact properties, with rows for each contact. It needs to contain at least the email address for each contact.
+        /// The following is a list of the contact properties (column headings in an .xls spreadsheet) that can be included in the import file (these are not case sensitive):
+        ///     EMAIL (also E-MAIL, EMAIL ADDRESS, E-MAIL ADDRESS)
+        ///     FIRST NAME
+        ///     MIDDLE NAME
+        ///     LAST NAME
+        ///     JOB TITLE
+        ///     COMPANY NAME
+        ///     WORK PHONE
+        ///     HOME PHONE
+        ///     ADDRESS LINE 1 (to 3)
+        ///     CITY
+        ///     STATE
+        ///     US STATE/CA PROVINCE
+        ///     COUNTRY
+        ///     ZIP/POSTAL CODE
+        ///     SUB ZIP/POSTAL CODE
+        ///     CUSTOM FIELD 1 (to 15)
+        /// The import file should contain in the first row the name of the columns which are about to be imported, this is not neccessary when only the email addresses are contained by the file.
+        /// </remarks>
         /// <param name="filename">Multipart file name.</param>
         /// <param name="lists">List of id's.</param>
         /// <returns>Returns an Activity object.</returns>
@@ -629,6 +652,29 @@ namespace CTCT
         /// <summary>
         /// Removes contacts from one ore more contact lists.
         /// </summary>
+        /// <remarks>
+        /// The currently supported file types are: text, csv, xls, xlsx.
+        /// 
+        /// The import file is constructed of columns containing contact properties, with rows for each contact. It needs to contain at least the email address for each contact.
+        /// The following is a list of the contact properties (column headings in an .xls spreadsheet) that can be included in the import file (these are not case sensitive):
+        ///     EMAIL (also E-MAIL, EMAIL ADDRESS, E-MAIL ADDRESS)
+        ///     FIRST NAME
+        ///     MIDDLE NAME
+        ///     LAST NAME
+        ///     JOB TITLE
+        ///     COMPANY NAME
+        ///     WORK PHONE
+        ///     HOME PHONE
+        ///     ADDRESS LINE 1 (to 3)
+        ///     CITY
+        ///     STATE
+        ///     US STATE/CA PROVINCE
+        ///     COUNTRY
+        ///     ZIP/POSTAL CODE
+        ///     SUB ZIP/POSTAL CODE
+        ///     CUSTOM FIELD 1 (to 15)
+        /// The import file should contain in the first row the name of the columns which are about to be imported, this is not neccessary when only the email addresses are contained by the file.
+        /// </remarks>
         /// <param name="filename">Multipart file name.</param>
         /// <param name="lists">List of id's.</param>
         /// <returns>Returns an Activity object.</returns>
