@@ -19,9 +19,10 @@
     <HtmlHelpName>CTCT</HtmlHelpName>
     <Language>en-US</Language>
     <DocumentationSources>
-      <DocumentationSource sourceFile="E:\VS Projects\Constant Contact\CSharp\CTCTWrapper\bin\Debug\CTCT.dll" xmlns="" />
-<DocumentationSource sourceFile="E:\VS Projects\Constant Contact\CSharp\CTCTWrapper\bin\Debug\CTCT.XML" xmlns="" /></DocumentationSources>
-    <SyntaxFilters>CSharp</SyntaxFilters>
+      <DocumentationSource sourceFile="..\bin\Debug\CTCT.XML" />
+      <DocumentationSource sourceFile="..\bin\Debug\CTCT.dll" />
+    </DocumentationSources>
+    <SyntaxFilters>CSharp, VisualBasic</SyntaxFilters>
     <SdkLinkTarget>Blank</SdkLinkTarget>
     <RootNamespaceContainer>False</RootNamespaceContainer>
     <PresentationStyle>VS2010</PresentationStyle>
@@ -30,6 +31,14 @@
     <HelpTitle>CTCT Wrapper Documented Class Library</HelpTitle>
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <MissingTags>Summary, Parameter, Returns, AutoDocumentCtors, TypeParameter, AutoDocumentDispose</MissingTags>
+    <BuildAssemblerVerbosity>OnlyErrors</BuildAssemblerVerbosity>
+    <HelpFileFormat>HtmlHelp1</HelpFileFormat>
+    <IndentHtml>False</IndentHtml>
+    <FrameworkVersion>.NET Framework 4.0</FrameworkVersion>
+    <KeepLogFile>True</KeepLogFile>
+    <DisableCodeBlockComponent>False</DisableCodeBlockComponent>
+    <CppCommentsFixup>False</CppCommentsFixup>
+    <CleanIntermediates>True</CleanIntermediates>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in
        order for Visual Studio to perform the build.  The others are optional
